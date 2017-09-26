@@ -22,3 +22,5 @@ deploy:
   on:
     repo: ryankurte/utils
     branch: master
+    tag: true
+    
