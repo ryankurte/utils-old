@@ -26,13 +26,13 @@ func main() {
 		Values: make(map[string]string),
 	}
 
-	fmt.Printf("ryankurte/utils fcfg version: %s\n", version)
-
 	if _, err := flags.Parse(&o); err != nil {
 		os.Exit(-1)
 	}
 
 	if o.Verbose {
+		fmt.Printf("ryankurte/utils fcfg version: %s\n", version)
+		fmt.Printf("https://github.com/ryankurte/utils/fcfg\n")
 		fmt.Printf("Loading template file: %s\n", o.Input)
 	}
 
