@@ -7,8 +7,6 @@ install:
 
 script:
   - make build-all
-
-after_success:
   - make package
 
 deploy:
