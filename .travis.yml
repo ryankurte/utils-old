@@ -21,7 +21,6 @@ deploy:
   file: build/*.tgz
   on:
     repo: ryankurte/utils
-    branch: master
     tags: true
   
 notifications:
