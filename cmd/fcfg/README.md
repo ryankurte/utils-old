@@ -8,7 +8,7 @@ Yes, you can achieve this with a pile of bash and or sed. No, it's not a good ti
 
 `./fcfg -i=[INPUT] -o=[OUTPUT] [-v=[KEY:VALUE]] [-k=KEY] [--verbose]`
 
-- Use go/mustache standard template fields in your config files
+- Use go/mustache standard template fields (`{{.NAME}}`) in your config files
 - Specify the input template with `-i` or `--input`
 - Specify the output file with `-o` or `--output`
 - Specify keys to load from the environment (`-k=key`) as required
