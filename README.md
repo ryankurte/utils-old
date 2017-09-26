@@ -8,7 +8,7 @@ Small utilities to Solve Problems and Make Life Better™️
 
 ## Utilities
 
-- [fcfg](cmd/fgfg) File ConFiGurator - parses template files with replacements from the command line or the environment.
+- [fcfg](https://github.com/ryankurte/utils/tree/master/cmd/fcfg) File ConFiGurator - parses template files with replacements from the command line or the environment.
 
 ## Installation
 
