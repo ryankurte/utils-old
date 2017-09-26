@@ -23,4 +23,7 @@ deploy:
     repo: ryankurte/utils
     branch: master
     tag: true
-    
+  
+notifications:
+  email: false
+  
