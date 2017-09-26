@@ -9,13 +9,15 @@ script:
   - make build-all
   - make package
 
+before_deploy:
+  - echo "Deploying `ls packages/*.tgz`"
+
 deploy:
   provider: releases
   api_key:
     secure: LHDv4Mq+5uhyzs77lE49YwsGgQNqHYzQGbRsoHWbBBcPVoV8znQeodRwj8abd6VRa3eZFGzVCxkLbnT82bcYHn6GgN72irTAKjANj6ofl2I+LEokGPHjMZ4Bx/cFxpZYjk1cxGgiIE47AT5F9l5khibfZbUbqpbWQZXCy6j05TE3yZEv+9n9sWvnRpJUGdVJDHWMhPd1l2KH06BZG51wgyqR7JijxEmUpq79FzxC229GrdMCPRpvNmclAyvBvUww5QLvfEjizEru+RO33uw7s6uAf4KpEUthj2UbusdjkM9DRT1MHrgO7Pwo4SA5YNwVvALjPXIgsRnat+CymjDaYlNa5n+5i314Re4Z1Bnd/tKZ2q/rY1UdQDcrlxx8jlVXgOoM2qxkqI+suXZzscZx1040k84VlZQNfXRDKoUhNfpjnBVWjU3mgur4Oi4uAaQNbiK5Ugpwa51VCHp60k8Tzm54Z/NGutONxsSkd/9tMcxvv3WLeJ+pO3RshmfIye8QfInJmjABa/m15ANLMF5p3O0PLHVENv4t2tjajBq/5FLaHj8fLR8vKZCcdd29jgblQpDm7SJxQ8SmwFfT8iAMypB4sd/5gqVc1xgxEVk/mY0yB2mnMuUCsDtPCgxwIrgfPXw1WzexH/+yFigjvFPNC7VHo/E3PN9AqvZnPiPVfmw=
-  skip_cleanup: true
   file: packages/*
+  skip_cleanup: true
   on:
     repo: ryankurte/utils
     branch: master
-    tags: true
