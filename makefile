@@ -10,7 +10,7 @@ build-all:
 	gox -output=build/{{.OS}}-{{.Arch}}/{{.Dir}} $(ARGS) ./cmd/...
 
 package:
-	for i in build/*; do if [ -d "$$i" ]; then tar -czf "$$i-$(VER).tgz" "$$i"; fi; done
+	cd build; for i in *; do if [ -d "$$i" ]; then tar -czf "$$i-$(VER).tgz"  "$$i"; fi; done
 
 install:
 	go get github.com/mitchellh/gox
