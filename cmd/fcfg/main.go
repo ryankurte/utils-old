@@ -2,12 +2,13 @@ package main
 
 import (
 	"bufio"
-	"fmt"
+	"log"
 	"io/ioutil"
 	"os"
 	"text/template"
 
 	"github.com/jessevdk/go-flags"
+    "github.com/fatih/color"
 )
 
 type option struct {
@@ -18,6 +19,7 @@ type option struct {
 	Overwrite bool              `short:"f" long:"force-overwrite" description:"overwrite output file if exists"`
 	Quiet     bool              `long:"quiet" description:"Quiet mode disables non-error outputs"`
     Version   bool              `long:"version" description:"Output version tag and exit"`
+    NoColor   bool              `long:"no-color" description:"Disables colored terminal outputs"`
 }
 
 func (o option) Usage() string {
@@ -27,42 +29,51 @@ func (o option) Usage() string {
 var version string
 
 func main() {
-	o := option{
+    log.SetFlags(0)
+
+	// Create option struct and load command line arguments
+    o := option{
 		Values: make(map[string]string),
 	}
-
 	if _, err := flags.Parse(&o); err != nil {
 		os.Exit(-1)
 	}
 
+    // Disable colour if set
+    if o.NoColor {
+        color.NoColor = true
+    }
+
+    // Print version and exit if --verson is specified
     if o.Version {
-        fmt.Printf("%s\n", version)
+        log.Printf("%s\n", version)
         os.Exit(0)
     }
 
+    // Print app name and version if --quiet is not specified
 	if !o.Quiet {
-		fmt.Printf("ryankurte/utils fcfg version: %s\n", version)
-		fmt.Printf("https://github.com/ryankurte/utils\n")
+		log.Printf("ryankurte/utils fcfg version: %s\n", version)
+		log.Printf("https://github.com/ryankurte/utils\n")
     }
 
     if o.Input == "" || o.Output == "" {
-        fmt.Printf("Missing input template file (-i, --input) and/or output file (-o, --output) arguments\n")
+        log.Fatalf(color.RedString("Missing input template file (-i, --input) and/or output file (-o, --output) arguments"))
         os.Exit(-2)
     }
 
     if !o.Quiet {
-        fmt.Printf("Loading template file: %s\n", o.Input)
+        log.Printf(color.CyanString("Loading template file: %s", o.Input))
 	}
 
 	f, err := ioutil.ReadFile(string(o.Input))
 	if err != nil {
-		fmt.Printf("Error opening input file: %s\n", err)
+		log.Fatalf(color.RedString("Error opening input file: %s", err))
 		os.Exit(-2)
 	}
 
 	tmpl, err := template.New("").Parse(string(f))
 	if err != nil {
-		fmt.Printf("Error parsing template: %s\n", err)
+		log.Fatalf(color.RedString("Error parsing template: %s", err))
 		os.Exit(-2)
 	}
 
@@ -75,26 +86,26 @@ func main() {
 	}
 
 	if !o.Quiet {
-		fmt.Printf("Loaded values:\n")
+		log.Printf(color.CyanString("Loaded values:"))
 		for k, v := range values {
-			fmt.Printf("  - %s:%s\n", k, v)
+			log.Printf(color.BlueString("  - %s:%s", k, v))
 		}
 	}
 
 	if !o.Quiet {
-		fmt.Printf("Writing output file: %s\n", o.Output)
+		log.Printf(color.CyanString("Writing output file: %s", o.Output))
 	}
 
 	wr, err := os.Create(string(o.Output))
 	if err != nil {
-		fmt.Printf("Error creating output file: %s\n", err)
+		log.Fatalf(color.RedString("Error creating output file: %s", err))
 		os.Exit(-2)
 	}
 
 	w := bufio.NewWriter(wr)
 	err = tmpl.Execute(w, values)
 	if err != nil {
-		fmt.Printf("Error executing template: %s\n", err)
+		log.Fatalf(color.RedString("Error executing template: %s", err))
 		os.Exit(-3)
 	}
 
@@ -102,6 +113,6 @@ func main() {
 	wr.Close()
 
     if !o.Quiet {
-        fmt.Printf("Output file configured\n")
+        log.Printf(color.CyanString("Output file written"))
     }
 }
