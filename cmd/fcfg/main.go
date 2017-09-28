@@ -16,7 +16,7 @@ type option struct {
 	Values    map[string]string `short:"v" long:"values" description:"specifies key:value pairs to be loaded into the template"`
 	Keys      []string          `short:"k" long:"keys" description:"specifies environmental variables to be loaded into the template"`
 	Overwrite bool              `short:"f" long:"force-overwrite" description:"overwrite output file if exists"`
-	Verbose   bool              `long:"verbose" description:"verbose mode for debug purposes"`
+	Quiet     bool              `long:"quiet" description:"Quiet mode disables non-error outputs"`
 }
 
 var version string
@@ -30,10 +30,13 @@ func main() {
 		os.Exit(-1)
 	}
 
-	if o.Verbose {
+	if !o.Quiet {
 		fmt.Printf("ryankurte/utils fcfg version: %s\n", version)
 		fmt.Printf("https://github.com/ryankurte/utils/fcfg\n")
-		fmt.Printf("Loading template file: %s\n", o.Input)
+    }
+
+    if !o.Quiet {
+        fmt.Printf("Loading template file: %s\n", o.Input)
 	}
 
 	f, err := ioutil.ReadFile(string(o.Input))
@@ -56,14 +59,14 @@ func main() {
 		values[k] = v
 	}
 
-	if o.Verbose {
+	if !o.Quiet {
 		fmt.Printf("Loaded values:\n")
 		for k, v := range values {
 			fmt.Printf("  - %s:%s\n", k, v)
 		}
 	}
 
-	if o.Verbose {
+	if !o.Quiet {
 		fmt.Printf("Writing output file: %s\n", o.Output)
 	}
 
@@ -82,4 +85,8 @@ func main() {
 
 	w.Flush()
 	wr.Close()
+
+    if !o.Quiet {
+        fmt.Printf("Output file configured\n")
+    }
 }
