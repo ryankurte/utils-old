@@ -6,7 +6,7 @@ Yes, you can achieve this with a pile of bash and or sed. No, it's not a good ti
 
 ## Usage
 
-`./fcfg -i=[INPUT] -o=[OUTPUT] [-v=[KEY:VALUE]] [-k=KEY] [--verbose]`
+`./fcfg -i=[INPUT] -o=[OUTPUT] [-v=KEY:VALUE] [-k=KEY] [--verbose]`
 
 - Use go/mustache standard template fields (`{{.NAME}}`) in your config files
 - Specify the input template with `-i` or `--input`
