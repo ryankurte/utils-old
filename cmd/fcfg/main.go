@@ -11,12 +11,17 @@ import (
 )
 
 type option struct {
-	Input     flags.Filename    `short:"i" long:"input" description:"input template file" required:"true"`
-	Output    flags.Filename    `short:"o" long:"output" description:"output file" required:"true"`
+	Input     flags.Filename    `short:"i" long:"input" description:"input template file"`
+	Output    flags.Filename    `short:"o" long:"output" description:"output file"`
 	Values    map[string]string `short:"v" long:"values" description:"specifies key:value pairs to be loaded into the template"`
 	Keys      []string          `short:"k" long:"keys" description:"specifies environmental variables to be loaded into the template"`
 	Overwrite bool              `short:"f" long:"force-overwrite" description:"overwrite output file if exists"`
 	Quiet     bool              `long:"quiet" description:"Quiet mode disables non-error outputs"`
+    Version   bool              `long:"version" description:"Output version tag and exit"`
+}
+
+func (o option) Usage() string {
+    return "fcfg --input=openvpn.conf.tmpl --output=openvpn.conf --values=ca:ca.crt --values=key:client.key"
 }
 
 var version string
@@ -30,9 +35,19 @@ func main() {
 		os.Exit(-1)
 	}
 
+    if o.Version {
+        fmt.Printf("%s\n", version)
+        os.Exit(0)
+    }
+
 	if !o.Quiet {
 		fmt.Printf("ryankurte/utils fcfg version: %s\n", version)
-		fmt.Printf("https://github.com/ryankurte/utils/fcfg\n")
+		fmt.Printf("https://github.com/ryankurte/utils\n")
+    }
+
+    if o.Input == "" || o.Output == "" {
+        fmt.Printf("Missing input template file (-i, --input) and/or output file (-o, --output) arguments\n")
+        os.Exit(-2)
     }
 
     if !o.Quiet {
