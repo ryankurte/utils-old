@@ -1,8 +1,8 @@
 # FCFG (File ConFiGurator)
 
-FCFG is a very small util that parses template files with replacements from the command line or the environment.
+FCFG is a very small utility that parses template files with replacements from the command line or the environment.
 
-Yes, you can achieve this with a pile of bash and or sed. No, it's not a good time for anyone.
+Yes, you can achieve this with a pile of bash and/or sed. No, it's not a good time for anyone.
 
 ## Usage
 
