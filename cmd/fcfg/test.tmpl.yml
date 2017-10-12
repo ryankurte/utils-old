@@ -1,7 +1,7 @@
 ---
 # This is a test template for the fcfg util
 # Run with:
-#  ./fcfg -i=cmd/fcfg/test.tmpl.yml -o=test.yml -v=KEY_ONE:lol -v=KEY_TWO:boop -k=PWD --verbose
+#  ./fcfg -i=cmd/fcfg/test.tmpl.yml -o=test.yml -v=KEY_ONE:lol -c=cmd/fcfg/test.data.yml -k=PWD --verbose
 
 key-one: {{ .KEY_ONE }}
 key-two: {{ .KEY_TWO }}
