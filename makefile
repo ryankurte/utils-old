@@ -9,6 +9,9 @@ build:
 build-all:
 	gox -output=build/{{.OS}}-{{.Arch}}/{{.Dir}} $(ARGS) ./cmd/...
 
+deps:
+	go get ./cmd/...
+
 package:
 	cd build; for i in *; do if [ -d "$$i" ]; then tar -czf "$$i-$(VER).tgz"  "$$i"; fi; done
 
