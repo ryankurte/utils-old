@@ -1,0 +1,21 @@
+---
+
+title: yaml2svg example
+description: Example YAML to SVG configuration
+width: 1024
+height: 840
+
+vars:
+  radius: 100
+
+  style-red: {fill: none, stroke: red}
+  style-black: {fill: none, stroke: black}
+  style-grey: {fill: none, stroke: grey}
+
+entities:
+  - {type: circle,  X: $(width / 2),  Y: $(height / 2), R: $radius, Style: $style-red}
+  - {type: line,    x1: 0, y1: 0, x2: $width, y2: $height, style: $style-black}
+  - {type: ellipse, x: $(width / 2),  y: $(height / 2), w: $(width / 6), h: $(height / 6), style: $style-red}
+  - {type: rect,    x: 10, y: 10, w: $(width - 20), h: $(height - 20), style: {fill: none, stroke: red, stroke-width: 4px}}
+  - {type: grid, x: 0, y: 0, w: $width, h: $height, n: 64, style: {fill: none, stroke: grey, opacity: 0.9}}
+    
