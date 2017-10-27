@@ -18,7 +18,7 @@ type option struct {
 	Output    flags.Filename    `short:"o" long:"output" description:"output file (required)"`
 	Values    map[string]string `short:"v" long:"values" description:"specifies key:value pairs to be loaded into the template"`
 	Keys      []string          `short:"k" long:"keys" description:"specifies environmental variables to be loaded into the template"`
-	Config    flags.Filename    `short:"c" long:"config" description:"YAML formatted key-value pairs to be loaded into the template"`
+	Configs   []flags.Filename  `short:"c" long:"configs" description:"YAML formatted key-value files to be loaded into the template"`
 	Overwrite bool              `short:"f" long:"force-overwrite" description:"overwrite output file if exists"`
 	Quiet     bool              `long:"quiet" description:"Quiet mode disables non-error outputs"`
 	Version   bool              `long:"version" description:"Output version tag and exit"`
@@ -92,9 +92,9 @@ func main() {
 		values[k] = os.Getenv(k)
 	}
 
-	// Load config (if supplied)
-	if o.Config != "" {
-		c, err := ioutil.ReadFile(string(o.Config))
+	// Load config files (if supplied)
+	for _, v := range o.Configs {
+		c, err := ioutil.ReadFile(string(v))
 		if err != nil {
 			fmt.Printf("Error loading config gile %s\n", err)
 			os.Exit(-6)

@@ -23,3 +23,4 @@ clean:
 	rm -rf build/*
 
 .PHONY: build build-all package install
+
