@@ -8,7 +8,7 @@ import (
 	"strings"
 
 	"github.com/Knetic/govaluate"
-	"github.com/ajstarks/svgo"
+	"github.com/ajstarks/svgo/float"
 	"github.com/go-yaml/yaml"
 	"github.com/jessevdk/go-flags"
 	"github.com/mitchellh/mapstructure"
@@ -101,8 +101,8 @@ func main() {
 		Title       string
 		Description string
 		Units       string
-		Width       int
-		Height      int
+		Width       float64
+		Height      float64
 		Vars        Vars
 		Meta        Meta
 		Entities    []map[string]interface{}
@@ -147,17 +147,17 @@ func main() {
 	for _, e := range entities {
 		switch e.Type {
 		case "circle":
-			canvas.Circle(int(e.X), int(e.Y), int(e.R), e.Style.String())
+			canvas.Circle(e.X, e.Y, e.R, e.Style.String())
 		case "ellipse":
-			canvas.Ellipse(int(e.X), int(e.Y), int(e.W), int(e.H), e.Style.String())
+			canvas.Ellipse(e.X, e.Y, e.W, e.H, e.Style.String())
 		case "rect":
-			canvas.Rect(int(e.X), int(e.Y), int(e.W), int(e.H), e.Style.String())
+			canvas.Rect(e.X, e.Y, e.W, e.H, e.Style.String())
 		case "center-rect":
-			canvas.CenterRect(int(e.X), int(e.Y), int(e.W), int(e.H), e.Style.String())
+			canvas.CenterRect(e.X, e.Y, e.W, e.H, e.Style.String())
 		case "grid":
-			canvas.Grid(int(e.X), int(e.Y), int(e.W), int(e.H), int(e.N), e.Style.String())
+			canvas.Grid(e.X, e.Y, e.W, e.H, e.N, e.Style.String())
 		case "line":
-			canvas.Line(int(e.X1), int(e.Y1), int(e.X2), int(e.Y2), e.Style.String())
+			canvas.Line(e.X1, e.Y1, e.X2, e.Y2, e.Style.String())
 		}
 	}
 
