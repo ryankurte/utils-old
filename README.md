@@ -9,6 +9,8 @@ Small utilities to Solve Problems and Make Life Better™️
 ## Utilities
 
 - [fcfg](https://github.com/ryankurte/utils/tree/master/cmd/fcfg) File ConFiGurator - parses template files with replacements from the command line or the environment.
+- [svgu](https://github.com/ryankurte/utils/tree/master/cmd/svgu) SVGUtil - builds SVGs with a yaml based syntax supporting method evaluation and variable substitution.
+- [gpm](https://github.com/ryankurte/utils/tree/master/cmd/gpm) Good Package Manager - a VERY small / simple package manager that uses git repositorys and semver tags to manage project dependencies.
 
 ## Installation
 

@@ -19,3 +19,5 @@ For example:
 
 `./fcfg -i=cmd/fcfg/test.tmpl.yml -o=test.yml -v=KEY_ONE:lol -v=KEY_TWO:boop -k=PWD`
 
+Loads the template `cmd/fcfg/test.tmpl.yml` with outputs written to `test.yml` and replaces instances of `{{.KEY_ONE}}` wth `lol`, `{{.KEY_TWO}}` with `boop` and `{{.PWD}}` with the environmental variable `PWD`.
+
