@@ -2,6 +2,8 @@
 
 A smol utility for programatically generating SVG files using a YML based specification with variable substitution and evaluation.
 
+Uses [Knetic/govaluate](https://github.com/Knetic/govaluate), [mitchellh/mapstructure](https://github.com/mitchellh/mapstructure), [ajstarks/svgo/](https://github.com/ajstarks/svgo/) and [ryankurte/go-structparse](https://github.com/ryankurte/go-structparse) to wire together some slightly terrifying in memory hijinks.
+
 ## Usage
 
 1. Metadata is specified at the top level
