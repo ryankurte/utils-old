@@ -10,14 +10,15 @@ build-all:
 	gox -output=build/{{.OS}}-{{.Arch}}/{{.Dir}} $(ARGS) ./cmd/...
 
 deps:
-	go get ./cmd/...
+	dep ensure
 
 package:
 	cd build; for i in *; do if [ -d "$$i" ]; then tar -czf "$$i-$(VER).tgz"  "$$i"; fi; done
 
 install:
+	go get -u github.com/golang/dep/cmd/dep
 	go get github.com/mitchellh/gox
-	go get -u ./cmd/...
+	dep ensure
 
 clean:
 	rm -rf build/*
