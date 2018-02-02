@@ -7,6 +7,7 @@ import (
 	"log"
 	"os"
 	"os/signal"
+	"strings"
 	"sync"
 	"syscall"
 	"time"
@@ -37,6 +38,8 @@ func main() {
 
 	// Clear logger flags
 	log.SetFlags(0)
+
+	log.Printf("Opening port(s): %+v", o.Ports)
 
 	// Open serial ports
 	connections := make([]*serial.Port, len(o.Ports))
@@ -77,7 +80,9 @@ func main() {
 						return
 					}
 					if len(b) != 0 {
-						lines <- InputLine{time.Now(), name, string(b)}
+						for _, v := range strings.Split(string(b), "\r\n") {
+							lines <- InputLine{time.Now(), name, v}
+						}
 					}
 
 				}
@@ -98,7 +103,7 @@ loop:
 		case <-c:
 			break loop
 		case line := <-lines:
-			log.Printf("[%s %s] %s", line.timestamp.Format(time.RFC3339), line.port, line.data)
+			log.Printf("[%s %s] %s\n", line.timestamp.Format(time.RFC3339), line.port, line.data)
 		}
 	}
 
