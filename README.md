@@ -1,6 +1,6 @@
 # Ryan's Utils
 
-Small utilities to Solve Problems and Make Life Better™️
+Small utilities to Solve Problems and Make Life Better ™️
 
 ## Status
 
