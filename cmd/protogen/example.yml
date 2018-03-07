@@ -1,0 +1,45 @@
+---
+name: rpl
+
+description: |
+6.3.1.  Format of the DIO Base Object
+0                   1                   2                   3
+0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+| RPLInstanceID |Version Number |             Rank              |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|G|0| MOP | Prf |     DTSN      |     Flags     |   Reserved    |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                                                               |
++                                                               +
+|                                                               |
++                            DODAGID                            +
+|                                                               |
++                                                               +
+|                                                               |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|   Option(s)...
++-+-+-+-+-+-+-+-+
+
+messages:
+
+- DIO:
+  fields:
+  - { name: RPLInstanceID, type: u8 }
+  - { name: Version Number, type: u8 }
+  - { name: Rank, type: u16 }
+  - type: flags
+    - { name: Grounded, shift: 0, mask: 0b00000001 }
+    - name: ModeOfOperation
+      shift: 2
+      mask: 0b00011100
+      options: 
+        - { name: NoDownwardRoutes, value: 0 }
+        - { name: NonStoring, value: 1 }
+        - { name: StoringNoMulticast, value: 2 }
+        - { name: StoringWithMulticast, value: 3 }
+    - { name: DODAGPreference, shift: 4, mask: 0b11100000 }
+    - { name: DTSN, type: u8 }
+    - { name: Flags, type: u8 }
+    - { name: Reserved, type: u8 }
+    - { name: DODAGID, type: [u8; 16]}
