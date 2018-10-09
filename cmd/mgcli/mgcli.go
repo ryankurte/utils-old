@@ -11,8 +11,8 @@ import (
 
 type Config struct {
 	Domain       string `short:"d" long:"domain" description:"Mailgun domain for sending" env:"MG_DOMAIN"`
-	APIKey       string `short:"k" long:"api-key" description:"Mailgun API key" env:"MG_API"`
-	PublicAPIKey string `short:"p" long:"public-api-key" description:"Mailgun public API key" env:"MG_PUBLIC_API"`
+	APIKey       string `short:"k" long:"api-key" description:"Mailgun API key" env:"MG_APIKEY"`
+	PublicAPIKey string `short:"p" long:"public-api-key" description:"Mailgun public API key" env:"MG_PUBLIC_APIKEY"`
 
 	GetLists GetLists `command:"get-lists"`
 	AddList  AddList  `command:"add-list"`
@@ -23,9 +23,12 @@ type Config struct {
 }
 
 type Send struct {
-	Subject string `short:"s" long:"subject" description:"Email subject" required:"true"`
-	Body    string `short:"b" long:"body" description:"Email body"`
-	From    string `short:"f" long:"from" description:"Email from address"`
+	Subject string   `short:"s" long:"subject" description:"Email subject" required:"true"`
+	Body    string   `short:"b" long:"body" description:"Email body" required:"true"`
+	From    string   `short:"f" long:"from" description:"Email from address" required:"true"`
+	To      []string `short:"t" long:"to" description:"Email to address(es)"`
+
+	Headers map[string]string `short:"h" long:"headers" description:"Email headers"`
 }
 
 type limitAndSkip struct {
@@ -39,7 +42,9 @@ type GetLists struct {
 }
 
 type AddList struct {
-	Name string `long:"name" description:"List name" required:"true"`
+	Address     string `long:"address" description:"List address" required:"true"`
+	Name        string `long:"name" description:"List name" required:"true"`
+	Description string `long:"description" description:"List description"`
 }
 
 type Version struct{}
@@ -62,7 +67,21 @@ func main() {
 		if err != nil {
 			log.Fatalf("Error fetching list: %s", err)
 		}
-		fmt.Printf("Lists: %v", lists)
+		fmt.Printf("Lists: %+v", lists)
+	case "add-lists":
+		list := mailgun.List{Address: c.AddList.Address, Name: c.AddList.Name, Description: c.AddList.Description}
+		list, err := mg.CreateList(list)
+		if err != nil {
+			log.Fatalf("Error fetching list: %s", err)
+		}
+		fmt.Printf("Created list")
+	case "send":
+		m := mailgun.NewMessage(c.Send.From, c.Send.Subject, c.Send.Body, c.Send.To...)
+		status, id, err := mg.Send(m)
+		if err != nil {
+			log.Fatalf("Error sending message: %s", err)
+		}
+		fmt.Printf("Message status: '%s' id: '%s'", status, id)
 	case "version":
 		fmt.Printf("%s\n", version)
 		os.Exit(0)
