@@ -14,6 +14,7 @@ package:
 
 install:
 	go get github.com/mitchellh/gox
+	go get ./cmd/...
 
 clean:
 	rm -rf build/*
