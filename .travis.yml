@@ -6,6 +6,7 @@ install:
   - make install
 
 script:
+  - make build
   - make build-all
   - make package
 
