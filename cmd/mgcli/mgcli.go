@@ -106,7 +106,7 @@ func main() {
 			fmt.Printf("Error creating member: '%s'\n", err)
 			os.Exit(-3)
 		}
-		fmt.Printf("Created member")
+		fmt.Printf("Created member\n")
 	case "send":
 		m := mailgun.NewMessage(c.Send.From, c.Send.Subject, c.Send.Text, c.Send.To...)
 		if c.Send.HTML != "" {
