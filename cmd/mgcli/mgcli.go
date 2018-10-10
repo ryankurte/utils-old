@@ -10,9 +10,8 @@ import (
 )
 
 type Config struct {
-	Domain       string `short:"d" long:"domain" description:"Mailgun domain for sending" env:"MG_DOMAIN"`
-	APIKey       string `short:"k" long:"api-key" description:"Mailgun API key" env:"MG_APIKEY"`
-	PublicAPIKey string `short:"p" long:"public-api-key" description:"Mailgun public API key" env:"MG_PUBLIC_APIKEY"`
+	Domain string `short:"d" long:"domain" description:"Mailgun domain for sending" env:"MG_DOMAIN"`
+	APIKey string `short:"k" long:"api-key" description:"Mailgun API key" env:"MG_APIKEY"`
 
 	GetLists  GetLists  `command:"get-lists" description:"Fetch existing mailing lists"`
 	AddList   AddList   `command:"create-list" description:"Create a new mailing list"`
@@ -80,7 +79,7 @@ func main() {
 		fmt.Printf("Connecting to domain: '%s' with public API key: '%s'\n", c.Domain, c.APIKey)
 	}
 
-	mg := mailgun.NewMailgun(c.Domain, c.APIKey, c.PublicAPIKey)
+	mg := mailgun.NewMailgun(c.Domain, c.APIKey)
 
 	switch p.Active.Name {
 	case "get-lists":
